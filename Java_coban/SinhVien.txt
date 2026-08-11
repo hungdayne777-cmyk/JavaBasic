@@ -1,0 +1,6 @@
+SV01;Nguyễn Thái Hưng;8.5
+SV02;Lê Thị Phương;7.5
+SV03;Nguyễn Văn Cường;8.0
+SV04;Trần Văn An;9.5
+SV05;Nguyễn Văn Mạnh;4.5
+SV06;Trần Thị Tâm;6.5
