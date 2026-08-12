@@ -6,7 +6,9 @@ package edu.cntt.lab03;
 
 import dao.SinhVien;
 import dao.SinhVienDao;
-import java.sql.Date;
+import java.text.ParseException;
+import java.util.Date;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Scanner;
 
@@ -92,10 +94,16 @@ public class Main {
         System.out.print("Họ tên: ");
         String hoTen = sc.nextLine();
 
-        System.out.print("Ngày sinh (yyyy-MM-dd): ");
+        System.out.print("Ngày sinh (dd/MM/yyyy): ");
         String ngaySinhStr = sc.nextLine();
-        Date ngaySinh = Date.valueOf(ngaySinhStr);
-
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        java.util.Date ngaySinh = null;
+//        Date ngaySinh = Date.valueOf(ngaySinhStr);
+        try {
+            ngaySinh = sdf.parse(ngaySinhStr);
+        } catch (ParseException ex) {
+            System.err.println("Kieu khong hop le");
+        }
         System.out.print("Giới tính (1-Nam, 0-Nữ): ");
         boolean gioiTinh = sc.nextInt() == 1;
         sc.nextLine();
@@ -179,10 +187,16 @@ public class Main {
         System.out.print("Họ tên: ");
         String hoTen = sc.nextLine();
 
-        System.out.print("Ngày sinh (yyyy-MM-dd): ");
+        System.out.print("Ngày sinh (dd/MM/yyyy): ");
         String ngaySinhStr = sc.nextLine();
-        Date ngaySinh = Date.valueOf(ngaySinhStr);
-
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        java.util.Date ngaySinh = null;
+//        Date ngaySinh = Date.valueOf(ngaySinhStr);
+        try {
+            ngaySinh = sdf.parse(ngaySinhStr);
+        } catch (ParseException ex) {
+            System.err.println("Kieu khong hop le");
+        }
         System.out.print("Giới tính (1-Nam, 0-Nữ): ");
         boolean gioiTinh = sc.nextInt() == 1;
         sc.nextLine();

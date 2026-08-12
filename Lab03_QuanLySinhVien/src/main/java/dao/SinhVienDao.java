@@ -1,7 +1,7 @@
 package dao;
 
 import java.sql.Connection;
-import java.sql.Date;
+import java.util.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -84,7 +84,7 @@ public class SinhVienDao {
             
             ps.setString(1, sv.getMaSV());
             ps.setString(2, sv.getHoTen());
-            ps.setDate(3, sv.getNgaySinh());
+              ps.setDate(3, new java.sql.Date(sv.getNgaySinh().getTime()));
             ps.setBoolean(4, sv.isGioiTinh());
             ps.setString(5, sv.getDiaChi());
             ps.setString(6, sv.getMaKhoa());
@@ -105,7 +105,7 @@ public class SinhVienDao {
              PreparedStatement ps = conn.prepareStatement(sql)) {
             
             ps.setString(1, sv.getHoTen());
-            ps.setDate(2, sv.getNgaySinh());
+            ps.setDate(2, new java.sql.Date(sv.getNgaySinh().getTime()));
             ps.setBoolean(3, sv.isGioiTinh());
             ps.setString(4, sv.getDiaChi());
             ps.setString(5, sv.getMaKhoa());

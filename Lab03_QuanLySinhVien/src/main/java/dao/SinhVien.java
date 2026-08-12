@@ -1,6 +1,6 @@
 package dao;
 
-import java.sql.Date;
+import java.util.Date;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
