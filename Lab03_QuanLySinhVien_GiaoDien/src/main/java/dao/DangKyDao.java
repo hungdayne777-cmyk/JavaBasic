@@ -1,0 +1,128 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package dao;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import util.DBConection;
+
+/**
+ *
+ * @author MSI
+ */
+public class DangKyDao {
+
+    public List<DangKy> findAll() {
+        List<DangKy> ds = new ArrayList<>();
+        String sql = "SELECT * FROM DANGKY";
+
+        try (Connection conn = DBConection.getConnection(); PreparedStatement ps = conn.prepareStatement(sql); ResultSet rs = ps.executeQuery()) {
+
+            while (rs.next()) {
+                String maSV = rs.getString("MaSV");
+                String maMH = rs.getString("MaMH");
+                Date ngayDK = rs.getDate("NgayDangKy");
+                int diemQT = rs.getInt("DiemQuaTrinh");
+                int diemThi = rs.getInt("DiemThi");
+                int diemTK = rs.getInt("DiemTongKet");
+
+                ds.add(new DangKy(maSV, maMH, ngayDK, diemQT, diemThi, diemTK));
+            }
+        } catch (SQLException e) {
+            System.out.println("Lỗi khi đọc dữ liệu: " + e.getMessage());
+        }
+        return ds;
+    }
+
+    public boolean delete(String maSV) {
+        String sql = "DELETE FROM DANGKY WHERE MaSV=?";
+
+        try (Connection conn = DBConection.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setString(1, maSV);
+            int rows = ps.executeUpdate();
+            return rows > 0;
+
+        } catch (SQLException e) {
+            System.out.println("Lỗi khi xóa dữ liệu: " + e.getMessage());
+        }
+        return false;
+    }
+
+    public DangKy findById(String maSV) {
+        String sql = "SELECT * FROM DANGKY WHERE MaSV=?";
+
+        try (Connection conn = DBConection.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setString(1, maSV);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return new DangKy(
+                            rs.getString("MaSV"),
+                            rs.getString("MaMH"),
+                            rs.getDate("NgayDangKy"),
+                            rs.getInt("DiemQuaTrinh"),
+                            rs.getInt("DiemThi"),
+                            rs.getInt("DiemTongKet")
+                    );
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println("Lỗi khi tìm kiếm: " + e.getMessage());
+        }
+        return null;
+    }
+
+    public boolean insert(DangKy dk) {
+        String sql = "INSERT INTO DANGKY VALUES (?, ?, ?, ?, ?, ?)";
+
+        try (Connection conn = DBConection.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setString(1, dk.getMaSVDK());
+            ps.setString(2, dk.getMaMHDK());
+            ps.setDate(3, new java.sql.Date(dk.getNgayDK().getTime()));
+            ps.setInt(4, dk.getDiemQT());
+            ps.setInt(5, dk.getDiemThi());
+            ps.setInt(6, dk.getDiemTK());
+
+            int rows = ps.executeUpdate();
+            return rows > 0;
+
+        } catch (Exception e) {
+            System.out.println("Lỗi khi thêm dữ liệu: " + e.getMessage());
+        }
+        return false;
+    }
+
+    public boolean update(DangKy dk) {
+        String sql = "UPDATE DANGKY SET MaMH = ?, NgayDangKy = ?, DiemQuaTrinh = ?, DiemThi = ?, DiemTongKet = ? WHERE MaSV = ?";
+
+        try (Connection conn = DBConection.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
+
+           
+            ps.setString(1, dk.getMaSVDK());
+            ps.setString(2, dk.getMaMHDK());
+            ps.setDate(3, new java.sql.Date(dk.getNgayDK().getTime()));
+            ps.setInt(4, dk.getDiemQT());
+            ps.setInt(5, dk.getDiemThi());
+            ps.setInt(6, dk.getDiemTK());
+
+
+            int rows = ps.executeUpdate();
+            return rows > 0;
+
+        } catch (Exception e) {
+            System.out.println("Lỗi khi cập nhật dữ liệu: " + e.getMessage());
+        }
+        return false;
+    }
+
+  
+}

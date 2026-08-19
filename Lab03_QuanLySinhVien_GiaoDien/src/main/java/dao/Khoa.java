@@ -38,7 +38,7 @@ public class Khoa {
 
     @Override
     public String toString() {
-        return this.TenKhoa;
+        return this.MaKhoa.trim()+"-"+this.TenKhoa ;
     }
         
 }
