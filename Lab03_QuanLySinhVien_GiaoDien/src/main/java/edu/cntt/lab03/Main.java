@@ -4,13 +4,13 @@
  */
 package edu.cntt.lab03;
 
-import dao.SinhVien;
 import dao.SinhVienDao;
 import java.text.ParseException;
 import java.util.Date;
 import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Scanner;
+import model.SinhVien;
 
 /**
  *

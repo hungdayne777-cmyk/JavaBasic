@@ -1,5 +1,6 @@
-package dao;
+package model;
 
+import dao.*;
 import java.util.Date;
 
 /*

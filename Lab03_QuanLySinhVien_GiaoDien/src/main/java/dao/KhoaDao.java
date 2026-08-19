@@ -9,8 +9,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 
 import java.util.List;
+import model.Khoa;
 import util.DBConection;
 
 /**
@@ -105,5 +107,27 @@ public class KhoaDao {
             System.out.println("Lỗi khi cập nhật dữ liệu: " + e.getMessage());
         }
         return false;
+    }
+    public List<Khoa> findByName(String name) {
+        List<Khoa> ds = new ArrayList<>();
+        String sql = "SELECT * FROM KHOA WHERE TenKhoa LIKE ?";
+        
+        try (Connection conn = DBConection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            
+            ps.setString(1, "%" + name + "%");
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    String maKH = rs.getString("MaKhoa");
+                    String tenKH = rs.getString("TenKhoa");
+                
+                    
+                    ds.add(new Khoa(maKH, tenKH));
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println("Lỗi khi tìm kiếm theo tên: " + e.getMessage());
+        }
+        return ds;
     }
 }

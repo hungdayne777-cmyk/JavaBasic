@@ -11,8 +11,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import util.DBConection;
-import dao.MonHocDao;
-import dao.MonHoc;
+import model.MonHoc;
 
 /**
  *
@@ -109,5 +108,27 @@ public class MonHocDao {
         System.out.println("Lỗi khi cập nhật dữ liệu: " + e.getMessage());
         return false;
     }
+    }
+    public List<MonHoc> findByName(String name) {
+        List<MonHoc> ds = new ArrayList<>();
+        String sql = "SELECT * FROM MONHOC WHERE TenMH LIKE ?";
+        
+        try (Connection conn = DBConection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            
+            ps.setString(1, "%" + name + "%");
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    String maMH = rs.getString("MaMH");
+                    String tenMH = rs.getString("TenMH");
+                 int soTC = rs.getInt("SoTinChi");
+                    ds.add(new MonHoc(maMH, tenMH, soTC));
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println("Lỗi khi tìm kiếm theo tên: " + e.getMessage());
+        }
+        return ds;
+    }
 }
-}
+
