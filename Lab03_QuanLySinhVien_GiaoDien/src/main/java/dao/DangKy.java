@@ -14,14 +14,14 @@ public class DangKy {
     private String MaSVDK;
      private String MaMHDK;
       private Date NgayDK;
-       private int DiemQT;
-       private int DiemThi;
-       private int DiemTK;
+       private double DiemQT;
+       private double DiemThi;
+       private double DiemTK;
 
     public DangKy() {
     }
 
-    public DangKy(String MaSVDK, String MaMHDK, Date NgayDK, int DiemQT, int DiemThi, int DiemTK) {
+    public DangKy(String MaSVDK, String MaMHDK, Date NgayDK, double DiemQT, double DiemThi, double DiemTK) {
         this.MaSVDK = MaSVDK;
         this.MaMHDK = MaMHDK;
         this.NgayDK = NgayDK;
@@ -54,27 +54,27 @@ public class DangKy {
         this.NgayDK = NgayDK;
     }
 
-    public int getDiemQT() {
+    public double getDiemQT() {
         return DiemQT;
     }
 
-    public void setDiemQT(int DiemQT) {
+    public void setDiemQT(double DiemQT) {
         this.DiemQT = DiemQT;
     }
 
-    public int getDiemThi() {
+    public double getDiemThi() {
         return DiemThi;
     }
 
-    public void setDiemThi(int DiemThi) {
+    public void setDiemThi(double DiemThi) {
         this.DiemThi = DiemThi;
     }
 
-    public int getDiemTK() {
+    public double getDiemTK() {
         return DiemTK;
     }
 
-    public void setDiemTK(int DiemTK) {
+    public void setDiemTK(double DiemTK) {
         this.DiemTK = DiemTK;
     }
 
@@ -82,5 +82,6 @@ public class DangKy {
     public String toString() {
         return "DangKy{" + "MaSVDK=" + MaSVDK + ", MaMHDK=" + MaMHDK + ", NgayDK=" + NgayDK + ", DiemQT=" + DiemQT + ", DiemThi=" + DiemThi + ", DiemTK=" + DiemTK + '}';
     }
-       
+
+   
 }

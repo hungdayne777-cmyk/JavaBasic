@@ -563,11 +563,13 @@ public class SinhVienForm extends javax.swing.JFrame {
 
         btnThemDK.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         btnThemDK.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/plus.png"))); // NOI18N
-        btnThemDK.setText("Thêm");
+        btnThemDK.setText("Đăng Ký");
+        btnThemDK.addActionListener(this::btnThemDKActionPerformed);
 
         btnXoaDK.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         btnXoaDK.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/delete.png"))); // NOI18N
         btnXoaDK.setText("Xóa");
+        btnXoaDK.addActionListener(this::btnXoaDKActionPerformed);
 
         btnSuaDK.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         btnSuaDK.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/pen.png"))); // NOI18N
@@ -1025,13 +1027,30 @@ public class SinhVienForm extends javax.swing.JFrame {
     }//GEN-LAST:event_txtDiemTKActionPerformed
 
     private void btnSuaDKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaDKActionPerformed
-        // TODO add your handling code here:
+        int chi_so_dong = tblDangKy.getSelectedRow();
+        String maSV = txtMaSVDK.getText().trim();
+    String maMH = txtMaMHDK.getText().trim();
+
+    if (chi_so_dong < 0 && (maSV.isEmpty() || maMH.isEmpty())) {
+        JOptionPane.showMessageDialog(this, "Vui lòng chọn dòng cần sửa hoặc nhập đủ Mã SV và Mã Môn Học!");
+        return;
+    }
+
+        DangKy dk = Gan_Du_LieuDK();
+
+        if (dangKyDao.update(dk)) {
+            JOptionPane.showMessageDialog(this, "Cập nhật thông tin thành công!");
+            Khoi_Tao_TableDK();
+        } else {
+            JOptionPane.showMessageDialog(this, "Cập nhật thất bại!");
+        }
     }//GEN-LAST:event_btnSuaDKActionPerformed
 
     private void btnXoaMHActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaMHActionPerformed
         int chi_so_dong = TblMonHoc.getSelectedRow();
-        if (chi_so_dong < 0) {
-            JOptionPane.showMessageDialog(this, "Vui lòng chọn dòng cần xóa trên bảng!");
+        String maSV = txtMaSV.getText().trim();
+        if (chi_so_dong < 0 && maSV.isEmpty() ) {
+            JOptionPane.showMessageDialog(this, "Vui lòng chọn dòng hoặc nhập Mã sinh viên cần Xóa !");
             return;
         }
 
@@ -1158,9 +1177,9 @@ public class SinhVienForm extends javax.swing.JFrame {
             String MaSV = tblDangKy.getValueAt(row, 0).toString();
             String MaMH = tblDangKy.getValueAt(row, 1).toString();
             String strNgay = tblDangKy.getValueAt(row, 2).toString();
-            int diemQT = (int) tblDangKy.getValueAt(row, 3);
-            int diemThi = (int) tblDangKy.getValueAt(row, 4);
-            int diemTK = (int) tblDangKy.getValueAt(row, 5);
+            double diemQT = (double) tblDangKy.getValueAt(row, 3);
+            double diemThi = (double) tblDangKy.getValueAt(row, 4);
+            double diemTK = (double) tblDangKy.getValueAt(row, 5);
             txtMaSVDK.setText(MaSV);
             txtMaMHDK.setText(MaMH);
           
@@ -1177,6 +1196,60 @@ public class SinhVienForm extends javax.swing.JFrame {
                 dtcNgayDK.setDate(null);
             }
     }//GEN-LAST:event_tblDangKyMouseClicked
+}
+    private void btnThemDKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemDKActionPerformed
+ //  Kiểm tra các ô Text rỗng
+        if (txtMaSVDK.getText().trim().isEmpty() || txtMaMHDK.getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Vui lòng nhập đầy đủ Mã SV và Mã Môn Học!");
+            return; // Dừng hàm ngay lập tức
+        }
+
+        //  Kiểm tra Ngày sinh rỗng 
+        if (dtcNgayDK.getDate() == null) {
+            JOptionPane.showMessageDialog(this, "Vui lòng chọn Ngày Đăng ký!");
+            return; // Dừng hàm
+        }
+
+      
+
+        // Nếu tất cả đều hợp lệ mới tạo đối tượng và chèn vào CSDL
+        DangKy dk = Gan_Du_LieuDK();
+
+        if (dangKyDao.insert(dk)) {
+            JOptionPane.showMessageDialog(this, "Đăng Ký thành công!");
+            Khoi_Tao_TableDK();
+            btnLamMoiActionPerformed(null);
+        } else {
+            JOptionPane.showMessageDialog(this, "Đăng Ký thất bại");
+        }        
+    }//GEN-LAST:event_btnThemDKActionPerformed
+
+    private void btnXoaDKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaDKActionPerformed
+       
+        String maSV = txtMaSVDK.getText().trim();
+    
+
+        int chi_so_dong = tblDangKy.getSelectedRow();
+         if (chi_so_dong < 0 && maSV.isEmpty() ) {
+            JOptionPane.showMessageDialog(this, "Vui lòng chọn dòng hoặc nhập Mã sinh viên cần Xóa !");
+            return;
+        }
+        int confirm = JOptionPane.showConfirmDialog(
+                this,
+                "Bạn có chắc chắn muốn xóa sinh viên: [" + maSV + "]" + " không?",
+                "Xác nhận xóa",
+                JOptionPane.YES_NO_OPTION
+        );
+
+        if (confirm == JOptionPane.YES_OPTION) {
+            if (dangKyDao.delete(maSV)) {
+                JOptionPane.showMessageDialog(this, "Xóa sinh viên thành công!");
+                Khoi_Tao_TableDK();
+                btnLamMoiActionPerformed(null);
+            } else {
+                JOptionPane.showMessageDialog(this, "Xóa thất bại!");
+            } 
+    }//GEN-LAST:event_btnXoaDKActionPerformed
     }
 
     /**
@@ -1493,9 +1566,10 @@ public class SinhVienForm extends javax.swing.JFrame {
 
         // Kiểm tra ngày tháng
         Date ngayDK = (dtcNgayDK.getDate() != null) ? dtcNgayDK.getDate() : new Date();
-        int diemQT = Integer.parseInt(txtDiemQT.getText().trim());
-        int diemThi = Integer.parseInt(txtDiemThi.getText().trim());
-        int diemTK = Integer.parseInt(txtDiemTK.getText().trim());
+        double diemQT = Double.parseDouble(txtDiemQT.getText().trim());
+       double diemThi = Double.parseDouble(txtDiemThi.getText().trim());
+       double diemTK = Double.parseDouble(txtDiemTK.getText().trim());
+       
         return new DangKy(maSV, maMH, ngayDK, diemQT, diemThi, diemTK);
 
     }

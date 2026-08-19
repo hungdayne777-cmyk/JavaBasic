@@ -29,9 +29,9 @@ public class DangKyDao {
                 String maSV = rs.getString("MaSV");
                 String maMH = rs.getString("MaMH");
                 Date ngayDK = rs.getDate("NgayDangKy");
-                int diemQT = rs.getInt("DiemQuaTrinh");
-                int diemThi = rs.getInt("DiemThi");
-                int diemTK = rs.getInt("DiemTongKet");
+                double diemQT = rs.getDouble("DiemQuaTrinh");
+                double diemThi = rs.getDouble("DiemThi");
+                double diemTK = rs.getDouble("DiemTongKet");
 
                 ds.add(new DangKy(maSV, maMH, ngayDK, diemQT, diemThi, diemTK));
             }
@@ -68,9 +68,9 @@ public class DangKyDao {
                             rs.getString("MaSV"),
                             rs.getString("MaMH"),
                             rs.getDate("NgayDangKy"),
-                            rs.getInt("DiemQuaTrinh"),
-                            rs.getInt("DiemThi"),
-                            rs.getInt("DiemTongKet")
+                            rs.getDouble("DiemQuaTrinh"),
+                            rs.getDouble("DiemThi"),
+                            rs.getDouble("DiemTongKet")
                     );
                 }
             }
@@ -88,9 +88,9 @@ public class DangKyDao {
             ps.setString(1, dk.getMaSVDK());
             ps.setString(2, dk.getMaMHDK());
             ps.setDate(3, new java.sql.Date(dk.getNgayDK().getTime()));
-            ps.setInt(4, dk.getDiemQT());
-            ps.setInt(5, dk.getDiemThi());
-            ps.setInt(6, dk.getDiemTK());
+            ps.setDouble(4, dk.getDiemQT());
+            ps.setDouble(5, dk.getDiemThi());
+            ps.setDouble(6, dk.getDiemTK());
 
             int rows = ps.executeUpdate();
             return rows > 0;
@@ -102,18 +102,16 @@ public class DangKyDao {
     }
 
     public boolean update(DangKy dk) {
-        String sql = "UPDATE DANGKY SET MaMH = ?, NgayDangKy = ?, DiemQuaTrinh = ?, DiemThi = ?, DiemTongKet = ? WHERE MaSV = ?";
+        String sql = "UPDATE DANGKY SET NgayDangKy = ?, DiemQuaTrinh = ?, DiemThi = ?, DiemTongKet = ? WHERE MaSV = ? AND MaMH = ?";
 
         try (Connection conn = DBConection.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
 
-           
-            ps.setString(1, dk.getMaSVDK());
-            ps.setString(2, dk.getMaMHDK());
-            ps.setDate(3, new java.sql.Date(dk.getNgayDK().getTime()));
-            ps.setInt(4, dk.getDiemQT());
-            ps.setInt(5, dk.getDiemThi());
-            ps.setInt(6, dk.getDiemTK());
-
+            ps.setDate(1, new java.sql.Date(dk.getNgayDK().getTime()));
+            ps.setDouble(2, dk.getDiemQT());
+            ps.setDouble(3, dk.getDiemThi());
+            ps.setDouble(4, dk.getDiemTK());
+            ps.setString(5, dk.getMaSVDK());
+            ps.setString(6, dk.getMaMHDK());
 
             int rows = ps.executeUpdate();
             return rows > 0;
@@ -124,5 +122,4 @@ public class DangKyDao {
         return false;
     }
 
-  
 }
