@@ -50,7 +50,7 @@ public class MonHoc {
 
     @Override
     public String toString() {
-        return "MonHoc{" + "MaMH=" + MaMH + ", TenMH=" + TenMH + ", SoTC=" + SoTC + '}';
+         return this.MaMH.trim()+"-"+this.TenMH ;
     }
             
     

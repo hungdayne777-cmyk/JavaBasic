@@ -110,12 +110,13 @@ public class KhoaDao {
     }
     public List<Khoa> findByName(String name) {
         List<Khoa> ds = new ArrayList<>();
-        String sql = "SELECT * FROM KHOA WHERE TenKhoa LIKE ?";
+        String sql = "SELECT * FROM KHOA WHERE TenKhoa LIKE ? OR MaKhoa LIKE ?";
         
         try (Connection conn = DBConection.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
             
             ps.setString(1, "%" + name + "%");
+             ps.setString(2, "%" + name + "%");
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
                     String maKH = rs.getString("MaKhoa");

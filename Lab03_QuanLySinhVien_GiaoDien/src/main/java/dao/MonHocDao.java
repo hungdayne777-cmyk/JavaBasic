@@ -111,12 +111,13 @@ public class MonHocDao {
     }
     public List<MonHoc> findByName(String name) {
         List<MonHoc> ds = new ArrayList<>();
-        String sql = "SELECT * FROM MONHOC WHERE TenMH LIKE ?";
+        String sql = "SELECT * FROM MONHOC WHERE TenMH LIKE ? OR MaMH LIKE ?";
         
         try (Connection conn = DBConection.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
             
             ps.setString(1, "%" + name + "%");
+             ps.setString(2, "%" + name + "%");
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
                     String maMH = rs.getString("MaMH");

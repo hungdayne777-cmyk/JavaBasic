@@ -83,8 +83,7 @@ public class SinhVien {
 
     @Override
     public String toString() {
-        return String.format("%-10s %-20s %-12s %-6s %-20s %-10s%n",
-                maSV, hoTen, NgaySinh, gioiTinh ? "Nam" : "Nữ", diaChi, maKhoa);
+       return this.maSV.trim()+"-"+this.hoTen ;
     }
 
 }

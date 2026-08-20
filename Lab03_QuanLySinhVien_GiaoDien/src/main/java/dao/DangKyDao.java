@@ -13,6 +13,7 @@ import java.util.Date;
 import java.util.List;
 import model.DangKy;
 import model.DangKyView;
+import model.SinhVien;
 import util.DBConection;
 
 /**
@@ -29,9 +30,7 @@ public class DangKyDao {
                          INNER JOIN  MONHOC ON DANGKY.MaMH = MONHOC.MaMH  
                      """;
 
-        try ( Connection conn = DBConection.getConnection(); 
-                PreparedStatement ps = conn.prepareStatement(sql);
-                ResultSet rs = ps.executeQuery()) {
+        try (Connection conn = DBConection.getConnection(); PreparedStatement ps = conn.prepareStatement(sql); ResultSet rs = ps.executeQuery()) {
 
             while (rs.next()) {
                 String maSV = rs.getString("MaSV");
@@ -43,7 +42,7 @@ public class DangKyDao {
                 String tenmh = rs.getString("TenMH");
                 String hotensv = rs.getString("HoTen");
 
-                ds.add(new DangKyView(maSV, maMH, ngayDK, diemQT, diemThi, diemTK,hotensv, tenmh));
+                ds.add(new DangKyView(maSV, maMH, ngayDK, diemQT, diemThi, diemTK, hotensv, tenmh));
             }
         } catch (SQLException e) {
             System.out.println("Lỗi khi đọc dữ liệu: " + e.getMessage());
@@ -90,48 +89,53 @@ public class DangKyDao {
         return null;
     }
 
-    public boolean insert(DangKy dk) {
-        String sql = "INSERT INTO DANGKY VALUES (?, ?, ?, ?, ?, ?)";
+    public boolean insert(DangKyView dk) {
+  
+    String sql = "INSERT INTO DANGKY (MaSV, MaMH, NgayDangKy, DiemQuaTrinh, DiemThi, DiemTongKet) VALUES (?, ?, ?, ?, ?, ?)";
+    
+    try (Connection conn = DBConection.getConnection();
+         PreparedStatement ps = conn.prepareStatement(sql)) {
+        
+        ps.setString(1, dk.getMaSV());
+        ps.setString(2, dk.getMaMH());
+        ps.setDate(3, new java.sql.Date(dk.getNgayDK().getTime()));
+        ps.setDouble(4, dk.getDiemQT());
+        ps.setDouble(5, dk.getDiemThi()); 
+        ps.setDouble(6, dk.getDiemTK());  
 
-        try (Connection conn = DBConection.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
-
-            ps.setString(1, dk.getMaSVDK());
-            ps.setString(2, dk.getMaMHDK());
-            ps.setDate(3, new java.sql.Date(dk.getNgayDK().getTime()));
-            ps.setDouble(4, dk.getDiemQT());
-            ps.setDouble(5, dk.getDiemThi());
-            ps.setDouble(6, dk.getDiemTK());
-
-            int rows = ps.executeUpdate();
-            return rows > 0;
-
-        } catch (Exception e) {
-            System.out.println("Lỗi khi thêm dữ liệu: " + e.getMessage());
-        }
-        return false;
+        int rows = ps.executeUpdate();
+        return rows > 0;
+        
+    } catch (Exception e) {
+        System.out.println("Lỗi khi thêm dữ liệu: " + e.getMessage());
     }
+    return false;
+}
+    public boolean update(DangKyView dk) {
+   
+    String sql = "UPDATE DANGKY SET NgayDangKy = ?, DiemQuaTrinh = ?, DiemThi = ?, DiemTongKet = ? WHERE MaSV = ? AND MaMH = ?";
 
-    public boolean update(DangKy dk) {
-        String sql = "UPDATE DANGKY SET NgayDangKy = ?, DiemQuaTrinh = ?, DiemThi = ?, DiemTongKet = ? WHERE MaSV = ? AND MaMH = ?";
+    try (Connection conn = DBConection.getConnection(); 
+         PreparedStatement ps = conn.prepareStatement(sql)) {
+        
+        ps.setDate(1, new java.sql.Date(dk.getNgayDK().getTime()));
+        ps.setDouble(2, dk.getDiemQT());
+        ps.setDouble(3, dk.getDiemThi());
+        ps.setDouble(4, dk.getDiemTK());
+        
+       
+        ps.setString(5, dk.getMaSV());
+        ps.setString(6, dk.getMaMH());
 
-        try (Connection conn = DBConection.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
+        int rows = ps.executeUpdate();
+        return rows > 0;
 
-            ps.setDate(1, new java.sql.Date(dk.getNgayDK().getTime()));
-            ps.setDouble(2, dk.getDiemQT());
-            ps.setDouble(3, dk.getDiemThi());
-            ps.setDouble(4, dk.getDiemTK());
-            ps.setString(5, dk.getMaSVDK());
-            ps.setString(6, dk.getMaMHDK());
-
-            int rows = ps.executeUpdate();
-            return rows > 0;
-
-        } catch (Exception e) {
-            System.out.println("Lỗi khi cập nhật dữ liệu: " + e.getMessage());
-        }
-        return false;
+    } catch (Exception e) {
+        System.out.println("Lỗi khi cập nhật dữ liệu: " + e.getMessage());
     }
- public List<DangKyView> search(String keyword) {
+    return false;
+}
+    public List<DangKyView> search(String keyword) {
         List<DangKyView> ds = new ArrayList<>();
         String sql = """
                        SELECT   DANGKY.MaSV, DANGKY.MaMH, NgayDangKy, DiemQuaTrinh, DiemThi, DiemTongKet, HoTen, TenMH
@@ -139,13 +143,14 @@ public class DangKyDao {
                          INNER JOIN  MONHOC ON DANGKY.MaMH = MONHOC.MaMH WHERE dangky.MASV LIKE ? OR TENMH LIKE ?  
                      """;
 
-        try { Connection conn = DBConection.getConnection(); 
-                PreparedStatement ps = conn.prepareStatement(sql);
-              
-                ps.setString(1, "%" + keyword + "%");
-                ps.setString(2, "%" + keyword + "%");
-                ResultSet rs = ps.executeQuery();
-    
+        try {
+            Connection conn = DBConection.getConnection();
+            PreparedStatement ps = conn.prepareStatement(sql);
+
+            ps.setString(1, "%" + keyword + "%");
+            ps.setString(2, "%" + keyword + "%");
+            ResultSet rs = ps.executeQuery();
+
             while (rs.next()) {
                 String maSV = rs.getString("MaSV");
                 String maMH = rs.getString("MaMH");
@@ -156,20 +161,19 @@ public class DangKyDao {
                 String tenmh = rs.getString("TenMH");
                 String hotensv = rs.getString("HoTen");
 
-                ds.add(new DangKyView(maSV, maMH, ngayDK, diemQT, diemThi, diemTK,hotensv, tenmh));
+                ds.add(new DangKyView(maSV, maMH, ngayDK, diemQT, diemThi, diemTK, hotensv, tenmh));
             }
         } catch (SQLException e) {
             System.out.println("Lỗi khi đọc dữ liệu: " + e.getMessage());
         }
         return ds;
     }
- 
+
     public static void main(String[] args) {
-         
+
         DangKyDao dkDAO = new DangKyDao();
-        for(DangKyView dk : dkDAO.findAll())
-        {
-            System.out.println(dk); 
+        for (DangKyView dk : dkDAO.findAll()) {
+            System.out.println(dk);
         }
     }
 }
