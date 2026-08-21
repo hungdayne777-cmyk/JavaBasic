@@ -123,12 +123,14 @@ public class SinhVienDao {
 
     public List<SinhVien> findByName(String name) {
         List<SinhVien> ds = new ArrayList<>();
-        String sql = "SELECT * FROM SINHVIEN WHERE HoTen LIKE ?";
+        String sql = "SELECT * FROM SINHVIEN WHERE HoTen LIKE ? OR MaSV LIKE ? OR DiaChi LIKE ?";
         
         try (Connection conn = DBConection.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
             
             ps.setString(1, "%" + name + "%");
+            ps.setString(2, "%" + name + "%");
+            ps.setString(3, "%" + name + "%");
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
                     String maSV = rs.getString("MaSV");

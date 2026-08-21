@@ -50,12 +50,13 @@ public class DangKyDao {
         return ds;
     }
 
-    public boolean delete(String maSV) {
-        String sql = "DELETE FROM DANGKY WHERE MaSV=?";
+    public boolean delete(String maSV, String maMH) {
+        String sql = "DELETE FROM DANGKY WHERE MaSV=? AND MaMH=?";
 
         try (Connection conn = DBConection.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
 
             ps.setString(1, maSV);
+            ps.setString(2, maMH);
             int rows = ps.executeUpdate();
             return rows > 0;
 
