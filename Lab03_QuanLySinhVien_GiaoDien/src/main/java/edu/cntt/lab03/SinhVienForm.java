@@ -376,6 +376,7 @@ public class SinhVienForm extends javax.swing.JFrame {
         jScrollPane1.setViewportView(tblSinhVien);
 
         lblTongSoSV.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        lblTongSoSV.setForeground(new java.awt.Color(255, 0, 0));
         lblTongSoSV.setText("0");
 
         lbltongSV.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -565,8 +566,9 @@ public class SinhVienForm extends javax.swing.JFrame {
         tabKhoa.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 880, 410));
 
         lblTongSoKhoa.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        lblTongSoKhoa.setForeground(new java.awt.Color(255, 0, 0));
         lblTongSoKhoa.setText("0");
-        tabKhoa.add(lblTongSoKhoa, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 430, -1, -1));
+        tabKhoa.add(lblTongSoKhoa, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 430, 90, -1));
 
         lbltongKhoa.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         lbltongKhoa.setText("Tổng Số:");
@@ -751,8 +753,9 @@ public class SinhVienForm extends javax.swing.JFrame {
         tabmonhoc.add(lbltongMH, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 430, -1, -1));
 
         lblTongSoMon.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        lblTongSoMon.setForeground(new java.awt.Color(255, 0, 0));
         lblTongSoMon.setText("0");
-        tabmonhoc.add(lblTongSoMon, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 430, -1, -1));
+        tabmonhoc.add(lblTongSoMon, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 430, 200, -1));
 
         jTabbedPane1.addTab("Môn Học", new javax.swing.ImageIcon(getClass().getResource("/icons/books.png")), tabmonhoc); // NOI18N
 
@@ -1002,8 +1005,9 @@ public class SinhVienForm extends javax.swing.JFrame {
         tabDangKy.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 890, 410));
 
         lblTongSoDK.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        lblTongSoDK.setForeground(new java.awt.Color(255, 16, 16));
         lblTongSoDK.setText("0");
-        tabDangKy.add(lblTongSoDK, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 430, -1, -1));
+        tabDangKy.add(lblTongSoDK, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 430, 180, -1));
 
         lbltongDK.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         lbltongDK.setText("Tổng Số:");
