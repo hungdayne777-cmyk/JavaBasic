@@ -7,7 +7,7 @@ import java.sql.SQLException;
 public class DBConection {
 
     private static final String URL 
-            = "jdbc:sqlserver://DESKTOP-1V4LFQF\\MSSQLSERVER01:1433;" //DESKTOP-1V4LFQF\MSSQLSERVER01:1433; (server dùng ở nhà) ,//PC-34\\SQLEXPRESS01:1433;(server dùng trên lớp)
+            = "jdbc:sqlserver://PC-34\\SQLEXPRESS01:1433;" //DESKTOP-1V4LFQF\MSSQLSERVER01:1433; (server dùng ở nhà) ,//PC-34\\SQLEXPRESS01:1433;(server dùng trên lớp)
             + "databaseName=QLGiaoVu;"
             + "encrypt=true;"
             + "trustServerCertificate=true;";
