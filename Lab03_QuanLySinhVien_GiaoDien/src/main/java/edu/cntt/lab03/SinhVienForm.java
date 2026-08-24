@@ -1002,7 +1002,7 @@ public class SinhVienForm extends javax.swing.JFrame {
         });
         jScrollPane4.setViewportView(tblDangKy);
 
-        jPanel10.add(jScrollPane4, new org.netbeans.lib.awtextra.AbsoluteConstraints(1, 27, 880, 170));
+        jPanel10.add(jScrollPane4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 20, 880, 180));
 
         tabDangKy.add(jPanel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 230, 880, 180));
 
@@ -1374,7 +1374,7 @@ public class SinhVienForm extends javax.swing.JFrame {
                 Khoi_Tao_TableMH();
                 btnLamMoiActionPerformed(null);
             } else {
-                JOptionPane.showMessageDialog(this, "Xóa thất bại");
+                JOptionPane.showMessageDialog(this, "Xóa thất bại vì đã tồn tại trong bảng Đăng Ký");
             }
         }
     }//GEN-LAST:event_btnXoaMHActionPerformed
