@@ -547,7 +547,7 @@ public class SinhVienForm extends javax.swing.JFrame {
                 .addContainerGap(10, Short.MAX_VALUE))
         );
 
-        tabKhoa.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 10, 820, 140));
+        tabKhoa.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 10, 790, 140));
 
         jPanel6.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Danh Sách Khoa", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12), new java.awt.Color(0, 0, 204))); // NOI18N
         jPanel6.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -569,7 +569,7 @@ public class SinhVienForm extends javax.swing.JFrame {
         });
         jScrollPane2.setViewportView(tblKhoa);
 
-        jPanel6.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 30, 820, 210));
+        jPanel6.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 30, 780, 210));
 
         tabKhoa.add(jPanel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 170, 820, 240));
 
@@ -1352,14 +1352,14 @@ public class SinhVienForm extends javax.swing.JFrame {
 
     private void btnXoaMHActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaMHActionPerformed
         int chi_so_dong = TblMonHoc.getSelectedRow();
-        String maSV = txtMaSV.getText().trim();
-        if (chi_so_dong < 0 && maSV.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Vui lòng chọn dòng hoặc nhập Mã sinh viên cần Xóa !");
+        
+        if (chi_so_dong < 0 ) {
+            JOptionPane.showMessageDialog(this, "Vui lòng chọn dòng cần Xóa !");
             return;
         }
 
         String maMH = TblMonHoc.getValueAt(chi_so_dong, 0).toString().trim();
-        String TenMH = TblMonHoc.getValueAt(chi_so_dong, 0).toString().trim();
+        String TenMH = TblMonHoc.getValueAt(chi_so_dong, 1).toString().trim();
 
         int confirm = JOptionPane.showConfirmDialog(
                 this,
